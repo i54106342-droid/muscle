@@ -36,7 +36,6 @@
         }
         .option-item:hover { border-color: var(--netter-red); background: rgba(139, 0, 0, 0.1); color: white; }
 
-        /* 結果卡片區域 */
         #result-card {
             display: none; background: var(--card-bg); border: 1px solid #222;
             padding: 40px 30px; border-radius: 2px; position: relative;
@@ -53,11 +52,10 @@
 
         .diagram-box {
             background: #fff; padding: 25px; margin-bottom: 30px; border-radius: 2px;
-            /* 改進濾鏡：讓白底變黑底金線 */
             filter: contrast(1.2) grayscale(1) invert(1) brightness(1.2);
             display: flex; justify-content: center; align-items: center; min-height: 250px;
         }
-        .diagram-box img { max-width: 100%; height: auto; display: block; }
+        .diagram-box img { max-width: 100%; max-height: 280px; height: auto; display: block; }
 
         .section-label { font-size: 0.8rem; color: var(--netter-red); border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 15px; letter-spacing: 2px; }
         .analysis-text { font-size: 1rem; color: #bbb; text-align: justify; margin-bottom: 30px; line-height: 1.8; }
@@ -120,7 +118,7 @@
             </div>
         </div>
 
-        <div class="section-label">理想共振 / RESONANCE</div>
+        <div class="section-label">理想共鳴 / RESONANCE</div>
         <div class="resonance-box">
             <div id="res-pair" style="color:var(--gold); font-size:1rem; margin-bottom:8px;"></div>
             <div id="res-pair-desc" style="font-size:0.9rem; color:#888;"></div>
@@ -141,57 +139,84 @@
         {
             n: "清晨時分，你步入一座荒廢已久的植物園。在層疊的綠意中，你的注意力會停留在哪裡？",
             options: [
-                { t: "支撐整座溫室、已與老藤合為一體的鏽蝕鐵柱", s: {G:1, T:1} },
-                { t: "葉片邊緣懸而未落、映照微光的晶瑩晨露", s: {F:1, E:1} },
-                { t: "空氣中微弱的、隨呼吸起伏的泥土濕潤感", s: {O:1, N:1} },
-                { t: "遠處穿過枝葉縫隙、不斷移動的斑駁光影", s: {R:1, Q:1} }
+                { t: "支撐整座溫室、已與老藤合為一體的鏽蝕鐵柱", s: {G:1, T:1, E:1} },
+                { t: "葉片邊緣懸而未落、映照微光的晶瑩晨露", s: {F:1, Q:1, D:1} },
+                { t: "空氣中微弱的、隨呼吸起伏的泥土濕潤感", s: {O:1, N:1, E:1} },
+                { t: "遠處穿過枝葉縫隙、不斷移動的斑駁光影", s: {R:1, Q:1, D:1} }
             ]
         },
         {
             n: "你正在修復一件脆弱的古物。面對最細微的裂縫，你傾向於如何處理？",
             options: [
-                { t: "以絕對的沈穩壓制震顫，確保每一次觸碰都精準無誤", s: {W:1, F:1} },
-                { t: "放鬆指尖，順應材質原有的紋理進行修補", s: {N:1, F:1} },
-                { t: "從大處著眼，先穩固整體的力學支點", s: {G:1, T:1} },
-                { t: "在修復的過程中，不經意地加入一抹獨特的裝飾", s: {D:1, R:1} }
+                { t: "以絕對的沈穩壓制震顫，確保每一次觸碰都精準無誤", s: {W:1, F:1, T:1} },
+                { t: "放鬆指尖，順應材質原有的紋理進行修補", s: {N:1, F:1, Q:1} },
+                { t: "從大處著眼，先穩固整體的力學支點", s: {G:1, T:1, O:1} },
+                { t: "在修復的過程中，不經意地加入一抹獨特的裝飾", s: {D:1, R:1, Q:1} }
             ]
         },
         {
             n: "你獨自穿越一片無邊的鹽原。天際線平坦得令人不安，此時你會？",
             options: [
-                { t: "加快步伐，感受肌肉爆發帶來的推進感", s: {Q:1, R:1} },
-                { t: "紮實地踏下每一步，確認自己與大地的聯繫", s: {T:1, G:1} },
-                { t: "閉上眼，轉而傾聽胸腔內傳出的、穩定的迴聲", s: {O:1, E:1} },
-                { t: "停下來環顧四周，尋找這片荒蕪中的視覺規律", s: {D:1, F:1} }
+                { t: "加快步伐，感受肌肉爆發帶來的推進感", s: {Q:1, R:1, W:1} },
+                { t: "紮實地踏下每一步，確認自己與大地的聯繫", s: {T:1, G:1, O:1} },
+                { t: "閉上眼，轉而傾聽胸腔內傳出的、穩定的迴聲", s: {O:1, E:1, N:1} },
+                { t: "停下來環顧四周，尋找這片荒蕪中的視覺規律", s: {D:1, F:1, G:1} }
             ]
         },
         {
             n: "山谷間突然起了一場沒來由的藍色大霧。在這股涼意中，你下意識的動作是？",
             options: [
-                { t: "收緊核心，等待這股未知的觸碰滲入皮膚", s: {O:1, W:1} },
-                { t: "伸出手掌試圖抓握霧氣，感受其細微的流動", s: {R:1, F:1} },
-                { t: "維持原有的步行節奏，不受突發異象的干擾", s: {T:1, N:1} },
-                { t: "挺起脊樑，在模糊的視野中尋找新的高度", s: {G:1, D:1} }
+                { t: "收緊核心，等待這股未知的觸碰滲入皮膚", s: {O:1, W:1, E:1} },
+                { t: "伸出手掌試圖抓握霧氣，感受其細微的流動", s: {R:1, F:1, D:1} },
+                { t: "維持原有的步行節奏，不受突發異象的干擾", s: {T:1, N:1, G:1} },
+                { t: "挺起脊樑，在模糊的視野中尋找新的高度", s: {G:1, D:1, W:1} }
             ]
         },
         {
             n: "如果要為你的生命留下一份診斷筆記，你希望它如何被總結？",
             options: [
-                { t: "一處永不動搖的核心支撐", s: {T:1, E:1, O:1} },
-                { t: "一段充滿張力與變革的弧線", s: {Q:1, D:1, R:1} },
-                { t: "一種在沈默中持續運作的本能", s: {N:1, E:1, G:1} },
-                { t: "一個極其細緻、難以被察覺的轉捩點", s: {W:1, F:1, O:1} }
+                { t: "一處永不動搖的核心支撐", s: {T:1, E:1, O:1, G:1} },
+                { t: "一段充滿張力與變革的弧線", s: {Q:1, D:1, R:1, G:1} },
+                { t: "一種在沈默中持續運作的本能", s: {N:1, E:1, G:1, O:1} },
+                { t: "一個極其細緻、難以被察覺的轉捩點", s: {W:1, F:1, O:1, R:1} }
             ]
         }
     ];
 
+    // 完整的 32 種結果數據
     const results = {
-        "GOTEN": { n: "橫膈膜", l: "Diaphragma", s: "★", tags: ["生命屏障", "隱形主宰"], d: "你是生命存在的前提。在宏大的起伏中，你調和了內部與外部的壓力。你不需要被看見，因為你就是世界運行的底噪。你的力量源於最深沉的本能。", strength: "極高的情緒包容度與耐力", weakness: "容易因外界的混亂而失去原有的節奏", pair: "心肌", pair_desc: "只有恆久的搏動能與你的呼吸共鳴。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Diaphragm_-_front_view.png/400px-Diaphragm_-_front_view.png" },
-        "FQRDW": { n: "球海綿體肌", l: "M. bulbospongiosus", s: "★★★★★", tags: ["瞬時迸發", "生命閾值"], d: "你是極致的意志爆發力。你主宰著生命湧現的瞬間，負責將長期累積的張力轉化為決定性的跨越。你是沈默後的驚雷，也是繁衍的火花。", strength: "無與倫比的集中執行力", weakness: "對平庸與漫長的日常耐受性較低", pair: "睫狀肌", pair_desc: "精準的視覺引導你將能量精準投射。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Gray1205.png/400px-Gray1205.png" },
-        "FOTDW": { n: "錐狀肌", l: "M. pyramidalis", s: "★★★★", tags: ["優雅贅餘", "演化遺留"], d: "你證明了並非所有組織都需要「功能」來定義價值。你是一種純粹的姿態，是那些微小、精緻且不具功利性的美的守護者。你雖然微小，卻讓你與眾不同。", strength: "獨特的審美敏感度與直覺", weakness: "在過於現實主義的環境中會感到格格不入", pair: "鐙骨肌", pair_desc: "兩份細微的靈魂守護世界的寧靜。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pyramidalis.png/400px-Pyramidalis.png" },
-        "FORDW": { n: "鐙骨肌", l: "M. stapedius", s: "★★★★★", tags: ["極致克制", "沈默守衛"], d: "你是全身上下最小的肌肉。在萬籟俱寂與震耳欲聾之間，你用微米級的收縮維持靈魂的平衡。你是極致的專注，守護著通往內在最後的防線。", strength: "極強的環境覺察力與自律", weakness: "過度的敏感有時會導致神經性疲憊", pair: "錐狀肌", pair_desc: "在幽微的角落尋得共鳴。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Gray919.png/400px-Gray919.png" },
-        "GOTEW": { n: "髂尾肌", l: "M. iliococcygeus", s: "★★★", tags: ["深層支撐", "無名基石"], d: "你是骨盆底的守護者。在最深處的核心，你支撐著靈魂的重擔。你沈穩且不張揚，在安靜中對抗著地心引力，維持整體的穩定。", strength: "卓越的耐受力與基礎穩固性", weakness: "習慣性承擔，容易在壓力下產生隱形勞損", pair: "橫膈膜", pair_desc: "上下呼應，維持軀幹的空靈與彈性。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Pelvis_diagram.png/400px-Pelvis_diagram.png" }
-        // 更多結果可按此格式補充...
+        "GOTEN": { n: "橫膈膜", l: "Diaphragma", s: "★", tags: ["生命屏障", "隱形主宰"], d: "你是生命存在的前提。在呼吸的循環中維持宏大的平穩。你是天生的調和者，不需要被看見，因為你就是世界運行的底噪。", strength: "環境包容力與節奏感", weakness: "容易因他人干擾失去自我節律", pair: "心肌", pair_desc: "恆久共鳴的律動者。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Diaphragm_-_front_view.png/400px-Diaphragm_-_front_view.png" },
+        "GOTEW": { n: "多裂肌", l: "M. multifidi", s: "★★★", tags: ["穩定脊樑", "深層正直"], d: "你比豎脊肌更深邃。你隱藏在骨縫間，用意志維持著整座靈魂的正直。你是沈默卻無比關鍵的防線。", strength: "驚人的內在原則與韌性", weakness: "過度承擔容易造成深層勞損", pair: "橫膈膜", pair_desc: "共同支撐軀體的結構性搭檔。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Erector_spinae.png/300px-Erector_spinae.png" },
+        "GOTDN": { n: "心肌", l: "Myocardium", s: "★★★★★", tags: ["自動律性", "永恆熱情"], d: "你是永不歇息的熱情。自動律性的細胞決定了你不需要外在驅使也能律動。你是生命大局中最規律的發動機。", strength: "源源不絕的行動能量", weakness: "情緒受阻時可能導致能量停滯", pair: "橫膈膜", pair_desc: "呼吸與律動的完美同步。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Diagram_of_the_human_heart_%28cropped%29.svg/400px-Diagram_of_the_human_heart_%28cropped%29.svg.png" },
+        "GOTDW": { n: "腹直肌", l: "M. rectus abdominis", s: "★★", tags: ["紀律戰甲", "核心武裝"], d: "你是意志力在體表的具象。整齊的紋理是你的紀律，你用堅實的姿態守護著內在的柔軟，展現出強大的掌控感。", strength: "極強的自我管理與自律", weakness: "過於剛硬有時會缺乏彈性", pair: "豎脊肌", pair_desc: "前後夾擊，維持靈魂的直立。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Rectus_abdominis.png/300px-Rectus_abdominis.png" },
+        "GOREN": { n: "背闊肌", l: "M. latissimus dorsi", s: "★★", tags: ["庇護之翼", "場域張力"], d: "你是大局的庇護者。寬闊的展開象徵你的包容力。在宏大的延伸中，你展現了力量與和諧的平衡。", strength: "寬廣的胸襟與支持力", weakness: "過度擴張可能導致重心不穩", pair: "胸大肌", pair_desc: "一收一放，擁抱整個世界。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Latissimus_dorsi.png/300px-Latissimus_dorsi.png" },
+        "GOREW": { n: "臀大肌", l: "M. gluteus maximus", s: "★", tags: ["重力推手", "扎根基石"], d: "你是直立行走的核心力量。強大、穩重且充滿爆發力。你扎根地心，支撐起所有宏大的探索旅程。", strength: "厚實的決策力與推動力", weakness: "習慣性承重可能導致反應遲鈍", pair: "髂腰肌", pair_desc: "推動與引導的完美轉折。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Gluteus_maximus.png/300px-Gluteus_maximus.png" },
+        "GORDN": { n: "斜方肌", l: "M. trapezius", r: "★★", tags: ["姿態支點", "承擔美感"], d: "你是承載重量的支點。在姿態的呈現中，你決定了整體的寬度。優雅中帶著韌性，你是靈魂背後的盾牌。", strength: "沈穩的責任感與美感", weakness: "容易累積不必要的緊繃與壓力", pair: "三角肌", pair_desc: "共同拓寬生命的邊界。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Trapezius_Gray409.png/350px-Trapezius_Gray409.png" },
+        "GORDW": { n: "股直肌", l: "M. rectus femoris", s: "★★★", tags: ["雙向衝刺", "推進決心"], d: "你是向前的決心。身為跨過兩個關節的成員，你既負責奔跑，也負責穩定。你是連接重心與未來方向的橋樑。", strength: "明確的目標感與開拓力", weakness: "雙重職責可能讓你感到左右為難", pair: "比目魚肌", pair_desc: "持續且爆發的前進力量。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Quadriceps.png/300px-Quadriceps.png" },
+        "GQTEN": { n: "髂腰肌", l: "M. iliopsoas", s: "★★★★", tags: ["深處轉身", "動量源泉"], d: "你是連接軀幹與下肢的秘密橋樑。你掌握著力量的傳遞，在深層的本能中引導生命的方向轉變。", strength: "靈活的轉場能力與協調力", weakness: "情緒壓抑常會反映在腰部的緊繃", pair: "多裂肌", pair_desc: "在穩定中創造流動的可能。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Iliopsoas.png/300px-Iliopsoas.png" },
+        "GQTEW": { n: "胸大肌", l: "M. pectoralis major", s: "★★", tags: ["勇敢開拓", "守護擁抱"], d: "你是最外顯的勇氣。將累積的能量推向外界。在宏大的動態中，你是那個最先推開石門、擁抱新局的人。", strength: "熱情、開拓與保護力", weakness: "過於強調前方可能忽略後方的脆弱", pair: "背闊肌", pair_desc: "一推一拉，構築完整的場域。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Pectoralis_major.png/300px-Pectoralis_major.png" },
+        "GQTDN": { n: "腓腸肌", l: "M. gastrocnemius", s: "★★★", tags: ["躍遷瞬間", "沈默彈簧"], d: "你是爆發的彈簧。所有的沈默累積都是為了那一秒的騰空，你是動態變革中的主導者，熱愛飛翔的瞬間。", strength: "驚人的爆發力與時機感", weakness: "著地時的衝擊需要更好的緩衝", pair: "比目魚肌", pair_desc: "耐力與爆發的共存夥伴。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Gastrocnemius.png/300px-Gastrocnemius.png" },
+        "GQTDW": { n: "三角肌", l: "M. deltoideus", s: "★★", tags: ["邊界衛士", "三向維度"], d: "你是撐開空間的意志。肩膀的寬度由你定義，在所有的防衛與進攻中，你都是生命中最先被看見的牆。", strength: "多角度的適應力與決斷力", weakness: "容易為了守護疆域而過度自我勞損", pair: "斜方肌", pair_desc: "共同支撐起強大的靈魂姿態。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Deltoid_muscle_back.png/350px-Deltoid_muscle_back.png" },
+        "GQREN": { n: "縫匠肌", l: "M. sartorius", s: "★★★★★", tags: ["長途優雅", "跨界平衡"], d: "你是全身上下最長的肌肉。你橫跨疆界，在複雜的動態中展現優雅的律動。你追求長期的和諧而非一時的暴力。", strength: "卓越的平衡感與協調能力", weakness: "過長的跨度可能讓你感到支撐散漫", pair: "髂腰肌", pair_desc: "共同引領優雅的步伐轉向。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Sartorius.png/300px-Sartorius.png" },
+        "GQREW": { n: "大圓肌", l: "M. teres major", s: "★★★★", tags: ["穩定旋轉", "幕後推手"], d: "你在背後默默輔助。在宏大的手臂揮動中，你維持了旋轉的穩定。你是隱藏在強大力量背後的精巧機制。", strength: "謙虛但高效的協作能力", weakness: "不被看見時容易感到被忽視", pair: "背闊肌", pair_desc: "大小呼應，維持整體的寬度。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Teres_major_muscle.png/400px-Teres_major_muscle.png" },
+        "GQRDN": { n: "棘上肌", l: "M. supraspinatus", s: "★★★★★", tags: ["啟動支點", "精密啟航"], d: "你是旋轉肌群的發動者。在任何宏大動作發生前，你微小的啟動決定了靈魂是否能順利抬起頭迎接挑戰。", strength: "精準的洞察力與先導意識", weakness: "最先接觸壓力，極其容易受傷", pair: "三角肌", pair_desc: "啟動與延續的完美配合。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Rotator_cuff_muscles.png/350px-Rotator_cuff_muscles.png" },
+        "GQRDW": { n: "肱二頭肌", l: "M. biceps brachii", s: "★★", tags: ["正面抗衡", "意志曲線"], d: "你是最直接的實踐者。將意志凝聚成明顯的線條。在動態的應對中，你代表了生命中那種不屈的、具象的力量。", strength: "自信且強大的實踐力", weakness: "過於直接的反應有時缺乏轉圜", pair: "肱三頭肌", pair_desc: "一伸一縮，掌握世界的距離。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Biceps_brachii.png/300px-Biceps_brachii.png" },
+        "FOTEN": { n: "髂尾肌", l: "M. iliococcygeus", s: "★★★★", tags: ["骨盆基底", "深層托舉"], d: "你是無名的守護者。在最隱秘的核心底部，你托舉著生命的重擔。你對抗地心引力，守護著靈魂的穩定。", strength: "沈穩、低調且持久的支撐", weakness: "長期被忽略的需求容易導致崩潰", pair: "橫膈膜", pair_desc: "共同維持身心的空靈張力。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Gray408.png/350px-Gray408.png" },
+        "FOTEW": { n: "內肋間肌", l: "Mm. intercostales interni", s: "★★★", tags: ["壓力過濾", "節奏微調"], d: "你是精細的過濾者。在呼吸的細枝末節中，你用意志調整內在的壓力。你擅長處理情緒與理智間的細微縫隙。", strength: "精確的自我調節能力", weakness: "過度專注細節容易感到壓抑", pair: "橫膈膜", pair_desc: "在宏大呼吸中加入細節層次。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Intercostales_interni.png/300px-Intercostales_interni.png" },
+        "FOTDN": { n: "腹橫肌", l: "M. transversus abdominis", s: "★★★★★", tags: ["隱形護甲", "核心恆定"], d: "你是最深層的塑形者。你不顯露於外，卻在內部維持靈魂的穩定。你是結構的核心，確保一切不致潰散。", strength: "極致的內斂與深層耐受力", weakness: "外界難以觸碰你的真實想法", pair: "多裂肌", pair_desc: "從核心深處穩固整個軀殼。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Transversus_abdominis.png/300px-Transversus_abdominis.png" },
+        "FOTDW": { n: "錐狀肌", l: "M. pyramidalis", s: "★★★★", tags: ["優雅贅餘", "姿態美學"], d: "你證明了並非所有組織都需要「功能」。你是一種純粹的姿態，是那些微小、精緻且不具功利性的美的守護者。", strength: "獨特的審美品味與直覺", weakness: "在現實主義環境中感到孤立", pair: "鐙骨肌", pair_desc: "在幽微角落共同守護靈魂。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pyramidalis.png/300px-Pyramidalis.png" },
+        "FOREN": { n: "梨狀肌", l: "M. piriformis", s: "★★★★", tags: ["深層轉機", "神經路徑"], d: "你是深處的變數。在核心轉動中，你決定了靈魂的轉向。雖然位置幽微，卻能引發巨大的連鎖反應。", strength: "靈敏的洞察與危機處理", weakness: "緊繃時容易壓迫到身邊的關係", pair: "髂腰肌", pair_desc: "內外呼應，引領靈魂的轉向。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Piriformis.png/300px-Piriformis.png" },
+        "FOREW": { n: "嚼肌", l: "M. masseter", s: "★★", tags: ["意志咬合", "執著源頭"], d: "你是全體最強的力量展現。一旦鎖定目標，便絕不鬆口。執著是你的代碼，你用它啃食命運的石塊。", strength: "無與倫比的恆心與鬥志", weakness: "過度執著容易傷害到自己", pair: "顳肌", pair_desc: "理智與力量的咬合共存。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Masseter.png/350px-Masseter.png" },
+        "FORDN": { n: "顳肌", l: "M. temporalis", s: "★★★", tags: ["沈思律動", "理性穩定"], d: "你是理性思考的側影。在深層邏輯的跳躍中，你維持穩定的支撐。你精細、沈穩且具備深度的覺察力。", strength: "清晰的頭腦與沈穩性格", weakness: "過度思考容易引發焦慮性偏頭痛", pair: "嚼肌", pair_desc: "在行動與思考間取得平衡。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Temporalis.png/350px-Temporalis.png" },
+        "FORDW": { n: "鐙骨肌", l: "M. stapedius", s: "★★★★★", tags: ["極致克制", "沈默門哨"], d: "你是全世界最小的肌肉。在萬籟俱寂與震耳欲聾之間，你維持著靈魂的寧靜。你是最細微的自律。", strength: "驚人的環境覺察力與自律", weakness: "過度的敏感可能導致神經疲憊", pair: "錐狀肌", pair_desc: "共同在角落守護微小的光芒。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Middle_ear_anatomy.svg/400px-Middle_ear_anatomy.svg.png" },
+        "FQTEN": { n: "睫狀肌", l: "M. ciliaris", s: "★★★★★", tags: ["視野調節", "聚焦本能"], d: "你是靈魂的濾鏡。透過微小的形變調整世界的清晰。你本能地捕捉真相，在混沌中尋找焦點。", strength: "敏銳的直覺與遠見", weakness: "長時間的高壓專注會讓你疲憊不堪", pair: "眼輪匝肌", pair_desc: "守護光影與焦點的完美組合。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Schematic_diagram_of_the_human_eye_en.svg/400px-Schematic_diagram_of_the_human_eye_en.svg.png" },
+        "FQTEW": { n: "頦舌肌", l: "M. genioglossus", s: "★★★", tags: ["表達之門", "情感傳遞"], d: "你是靈魂的出口。主宰了語言與吞嚥。你的意志在細碎的變化中，將內在世界與外界連結起來。", strength: "出色的溝通力與表達欲", weakness: "言語過快有時會傷及他人", pair: "喉肌", pair_desc: "音節與張力的共鳴搭檔。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gray1019.png/350px-Gray1019.png" },
+        "FQTDN": { n: "甲杓肌", l: "M. thyroarytenoideus", s: "★★★★★", tags: ["音色共鳴", "情緒震顫"], d: "你是聲帶的精密控制器。你的微小震動決定了靈魂的頻率。你是情緒的精緻共鳴點。", strength: "極強的同理心與情感表達", weakness: "情緒受損時會失去發聲的勇氣", pair: "舌肌", pair_desc: "將情感化作真實的語言。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Larynx_-_pterygoideus_and_muscles_of_larynx.png/350px-Larynx_-_pterygoideus_and_muscles_of_larynx.png" },
+        "FQTDW": { n: "胸鎖乳突肌", l: "M. sternocleidomastoideus", s: "★★", tags: ["轉向自由", "標誌座標"], d: "你是視角的轉折者。在那一扭頭的瞬間，你展現了自由的意志。你是鮮明、標誌性且充滿動力的座標。", strength: "勇於面對變革與新視野", weakness: "頻繁的轉向可能讓人感到不安", pair: "斜方肌", pair_desc: "共同構築鮮明的軀幹輪廓。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sternocleidomastoideus.png/350px-Sternocleidomastoideus.png" },
+        "FQREN": { n: "眼輪匝肌", l: "M. orbicularis oculi", s: "★★★", tags: ["視覺快門", "柔軟防線"], d: "你是光影的守護者。在眨眼之間過濾塵埃。你是靈魂對外界最柔軟、最敏感的觸碰點。", strength: "極致的細心與覺察力", weakness: "容易因外界的醜惡而閉上雙眼", pair: "睫狀肌", pair_desc: "守護內在之光的共同體。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Orbicularis_oculi.png/350px-Orbicularis_oculi.png" },
+        "FQREW": { n: "嘴輪匝肌", l: "M. orbicularis oris", s: "★★★", tags: ["情感邊界", "沈默誓言"], d: "你是情感的門檻。在收縮與舒展間傳遞沈默、親吻與語言。你是靈魂與世界最親密的物理邊界。", strength: "感性、親和力與秘密守護", weakness: "容易為了保護他人而緊閉心扉", pair: "舌肌", pair_desc: "共同譜寫靈魂的表達之詩。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Orbicularis_oris.png/350px-Orbicularis_oris.png" },
+        "FQRDN": { n: "趾長屈肌", l: "M. flexor digitorum longus", s: "★★★★★", tags: ["抓地意志", "微觀前進"], d: "你是抓地力的來源。在足部深處用意志抓緊每一寸土地。你是精細動態與穩定的完美結合。", strength: "腳踏實地的執行力", weakness: "過度專注腳下可能忽略遠方", pair: "比目魚肌", pair_desc: "在穩定中提供持續動力。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Gray426.png/350px-Gray426.png" },
+        "FQRDW": { n: "球海綿體肌", l: "M. bulbospongiosus", s: "★★★★★", tags: ["生命高潮", "迸發意志"], d: "你是極致的瞬間迸發。在最私密的邊界，你主宰著生命的湧現。你是本能與意志最激烈的交界。", strength: "純粹的創造力與瞬間爆發", weakness: "平庸的日常會讓你感到枯竭", pair: "睫狀肌", pair_desc: "在瞬間的迸發中保持視野焦點。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Gray408.png/350px-Gray408.png" }
     };
 
     let userScores = { G:0, F:0, O:0, R:0, T:0, Q:0, E:0, D:0, N:0, W:0 };
