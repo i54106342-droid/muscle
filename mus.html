@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>構造的質詢：臨床製圖術</title>
+    <style>
+        :root {
+            --netter-red: #a51c1c;
+            --gold: #c5a059;
+            --paper: #fdfaf7;
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+        }
+
+        * { box-sizing: border-box; font-family: "Noto Serif TC", "Songti TC", serif; }
+
+        body {
+            margin: 0; background: var(--bg); color: #ddd;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+
+        #app { width: 100%; max-width: 500px; padding: 20px; }
+
+        /* 隱喻式敘事 */
+        .narrative { font-size: 0.95rem; color: #888; margin-bottom: 30px; line-height: 1.8; font-style: italic; }
+        h1 { font-weight: 300; font-size: 1.1rem; color: var(--netter-red); letter-spacing: 0.3em; text-align: center; margin: 40px 0; }
+
+        /* 選項按鈕 */
+        .option-item {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            color: #bbb; padding: 18px; cursor: pointer; text-align: left;
+            transition: 0.3s; font-size: 0.95rem; margin-bottom: 12px; width: 100%;
+        }
+        .option-item:hover { border-color: var(--netter-red); background: rgba(165, 28, 28, 0.1); color: white; }
+
+        /* --- 結果卡片區域 (截圖重點) --- */
+        #result-card {
+            display: none; background: var(--card-bg); border: 1px solid #333;
+            padding: 35px 25px; border-radius: 4px; position: relative;
+            animation: slideUp 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .card-header { text-align: center; margin-bottom: 25px; }
+        .star-rating { color: var(--gold); font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 10px; }
+        .muscle-latin { font-family: "Times New Roman", serif; font-style: italic; color: var(--netter-red); font-size: 1rem; margin-bottom: 5px; opacity: 0.8; }
+        .muscle-main-name { font-size: 2.2rem; font-weight: 600; color: #fff; margin-bottom: 15px; letter-spacing: 2px; }
+        
+        .tags-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+        .tag { background: #1a1a1a; padding: 3px 10px; font-size: 0.75rem; color: #777; border: 1px solid #222; }
+
+        .diagram-box {
+            background: var(--paper); padding: 15px; margin-bottom: 25px; border-radius: 2px;
+            mix-blend-mode: lighten; filter: contrast(1.1) grayscale(100%) invert(1); /* 讓白底圖變黑底金線感 */
+        }
+        .diagram-box img { width: 100%; height: auto; display: block; }
+
+        .section-label { font-size: 0.75rem; color: var(--netter-red); border-bottom: 1px solid #222; padding-bottom: 5px; margin-bottom: 12px; letter-spacing: 1px; font-weight: bold; }
+        .analysis-text { font-size: 0.9rem; color: #bbb; text-align: justify; margin-bottom: 25px; line-height: 1.7; }
+        
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .info-card { background: #0a0a0a; padding: 12px; border-top: 1px solid #222; }
+        .info-label { font-size: 0.7rem; color: #555; margin-bottom: 4px; }
+        .info-value { font-size: 0.85rem; color: #999; }
+
+        .resonance-box { background: #151515; padding: 15px; border-left: 2px solid var(--gold); margin-bottom: 20px; }
+
+        .card-footer { border-top: 1px solid #222; padding-top: 15px; text-align: center; font-size: 0.7rem; color: #444; letter-spacing: 2px; }
+
+        /* 功能按鈕 */
+        .action-btns { margin-top: 30px; text-align: center; }
+        .btn-ghost { background: none; border: 1px solid #444; color: #666; padding: 10px 20px; font-size: 0.8rem; cursor: pointer; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 截圖模式隱藏按鈕 */
+        @media print { .action-btns { display: none; } }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div id="start-page">
+        <h1>CARTOGRAPHY<br>OF SINEW</h1>
+        <div class="narrative">
+            構造的質詢。我們跳過意識的喧囂，直接審視那些決定你生命張力的纖維。<br>
+            這是一場關於你的臨床座標標註。
+        </div>
+        <button class="option-item" style="text-align:center" onclick="init()">開始 製圖</button>
+    </div>
+
+    <div id="quiz-page" style="display:none;">
+        <div class="narrative" id="q-narrative"></div>
+        <div class="option-list" id="options"></div>
+    </div>
+
+    <div id="result-card">
+        <div class="card-header">
+            <div class="star-rating" id="res-stars"></div>
+            <div class="muscle-latin" id="res-latin"></div>
+            <div class="muscle-main-name" id="res-name"></div>
+            <div class="tags-row" id="res-tags"></div>
+        </div>
+        
+        <div class="diagram-box">
+            <img id="res-img" src="" alt="Anatomy">
+        </div>
+
+        <div class="section-label">臨床剖析 / CLINICAL ANALYSIS</div>
+        <div class="analysis-content analysis-text" id="res-desc"></div>
+
+        <div class="grid-info">
+            <div class="info-card">
+                <div class="info-label">結構強度 / STRENGTH</div>
+                <div class="info-value" id="res-strength"></div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">脆弱座標 / VULNERABILITY</div>
+                <div class="info-value" id="res-weakness"></div>
+            </div>
+        </div>
+
+        <div class="section-label">理想共振 / RESONANCE</div>
+        <div class="resonance-box">
+            <div id="res-pair" style="color:var(--gold); font-size:0.9rem; margin-bottom:5px;"></div>
+            <div id="res-pair-desc" style="font-size:0.8rem; color:#777;"></div>
+        </div>
+
+        <div class="card-footer">
+            CODE: <span id="res-code"></span> | 臨床製圖術
+        </div>
+    </div>
+
+    <div class="action-btns" id="post-quiz-btns" style="display:none;">
+        <button class="btn-ghost" onclick="location.reload()">重新製圖</button>
+        <p style="font-size: 0.7rem; color: #444; margin-top: 15px;">長按螢幕或使用截圖功能分享你的結果</p>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            n: "你步入一座正在坍塌的圖書館。在崩潰發生的瞬間，你的本能是？",
+            options: [
+                { t: "撐起即將墜落的橫樑，維持結構的完整", s: {G:1, T:1} },
+                { t: "迅速將一本極小的珍本書藏入懷中，那是唯一的精華", s: {F:1, E:1} },
+                { t: "閉上眼感受震動，尋找坍塌中穩定的節奏", s: {O:1, N:1} },
+                { t: "向窗外的一道光芒飛奔而去，無視身後的毀滅", s: {R:1, Q:1} }
+            ]
+        },
+        {
+            n: "（擾亂項）突然間，你發現自己正握著一隻發光的藍色甲蟲。它試圖對你說話，你會？",
+            options: [
+                { t: "將它吞下，獲取那種來自異域的核心動力", s: {N:1, E:1, G:1} },
+                { t: "用指尖輕輕捏碎它，觀察光芒消散的細節", s: {W:1, F:1, Q:1} },
+                { t: "任由它爬向你的後頸，成為你姿勢的一部分", s: {T:1, D:1, O:1} },
+                { t: "問它：『你是否也是某種解剖學上的錯誤？』", s: {R:1, D:1, F:1} }
+            ]
+        },
+        {
+            n: "世界陷入絕對的寂靜，唯有一種聲音在持續。你希望那是？",
+            options: [
+                { t: "沈重石塊與石塊之間摩擦的低鳴", s: {T:1, G:1} },
+                { t: "鐘錶發條在極限下，那種纖細而緊繃的嗡嗡聲", s: {W:1, F:1} },
+                { t: "潮汐反覆拍打岸邊，那種無意識的湧動", s: {N:1, O:1} },
+                { t: "一支箭劃破空氣時，那種致命的尖嘯", s: {Q:1, R:1} }
+            ]
+        },
+        {
+            n: "如果你是一份契約的執行者，你如何確保承諾的達成？",
+            options: [
+                { t: "在契約中心按下一個深不可測的印記", s: {O:1, E:1} },
+                { t: "用極其繁複且華麗的裝飾線包圍全文", s: {D:1, R:1} },
+                { t: "沈默地注視契約，直至意志將其蝕刻在骨骼上", s: {W:1, T:1} },
+                { t: "將契約撕碎，將其碎片散佈到每一處關節", s: {Q:1, F:1} }
+            ]
+        },
+        {
+            n: "在一場漫長的儀式終結時，你選擇留下什麼作為代價？",
+            options: [
+                { t: "一個絕對正直的座標，不再變更", s: {T:1, W:1, G:1} },
+                { t: "一個充滿彈性、隨時準備轉身的瞬間", s: {Q:1, N:1, R:1} },
+                { t: "一個極其深邃、無法被外界觸摸的點", s: {O:1, E:1, F:1} },
+                { t: "一個華麗但無用的、只存在於邊緣的弧線", s: {D:1, F:1, R:1} }
+            ]
+        }
+    ];
+
+    const results = {
+        "GOTEN": { n: "橫膈膜", l: "Diaphragma", s: "★", tags: ["生命屏障", "隱形主宰"], d: "你是生命存在的前提。在宏大的起伏中，你調和了內部與外部的壓力。你不需要被看見，因為你就是世界運行的底噪。", strength: "極高的情緒包容度", weakness: "容易因他人的混亂而失去節奏", pair: "心肌", pair_desc: "只有恆久的搏動能與你的呼吸共鳴。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Diaphragm_-_front_view.png/400px-Diaphragm_-_front_view.png" },
+        "FQRDW": { n: "球海綿體肌", l: "M. bulbospongiosus", s: "★★★★★", tags: ["瞬間迸發", "生命閾值"], d: "你是極致的意志。你主宰著生命湧現的瞬間，負責將累積的張力轉化為決定性的跨越。你是沈默後的驚雷。", strength: "無與倫比的執行爆發力", weakness: "對平庸的日常耐受性極低", pair: "睫狀肌", pair_desc: "精準的視覺引導你將能量精準投射。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Gray408.png/350px-Gray408.png" },
+        "FOTDW": { n: "錐狀肌", l: "M. pyramidalis", s: "★★★★", tags: ["優雅贅餘", "演化遺留"], d: "你證明了並非所有組織都需要「功能」。你是一種純粹的姿態，是那些微小、精緻且不具功利性的美的守護者。", strength: "獨特的審美與直覺", weakness: "在現實主義環境中感到孤立", pair: "鐙骨肌", pair_desc: "兩份細微的靈魂守護世界的寧靜。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pyramidalis.png/300px-Pyramidalis.png" },
+        "FORDW": { n: "鐙骨肌", l: "M. stapedius", s: "★★★★★", tags: ["極致克制", "沈默守衛"], d: "你是全身上下最小的肌肉。在萬籟俱寂與震耳欲聾之間，你用微米級的收縮維持靈魂的平衡。你是極致的專注。", strength: "極強的環境覺察與自律", weakness: "過度的敏感可能導致神經疲憊", pair: "錐狀肌", pair_desc: "在幽微的角落尋得共鳴。", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Middle_ear_anatomy.svg/400px-Middle_ear_anatomy.svg.png" }
+        // ... 其他結果同此格式補完
+    };
+
+    let userScores = { G:0, F:0, O:0, R:0, T:0, Q:0, E:0, D:0, N:0, W:0 };
+    let step = 0;
+
+    function init() {
+        document.getElementById('start-page').style.display = 'none';
+        document.getElementById('quiz-page').style.display = 'block';
+        showQuestion();
+    }
+
+    function showQuestion() {
+        if (step >= questions.length) { renderResult(); return; }
+        const q = questions[step];
+        document.getElementById('q-narrative').innerText = q.n;
+        const list = document.getElementById('options');
+        list.innerHTML = '';
+        q.options.forEach(o => {
+            const btn = document.createElement('button');
+            btn.className = 'option-item';
+            btn.innerText = o.t;
+            btn.onclick = () => {
+                for(let k in o.s) userScores[k] += o.s[k];
+                step++;
+                showQuestion();
+            };
+            list.appendChild(btn);
+        });
+    }
+
+    function renderResult() {
+        document.getElementById('quiz-page').style.display = 'none';
+        document.getElementById('result-card').style.display = 'block';
+        document.getElementById('post-quiz-btns').style.display = 'block';
+
+        let code = "";
+        code += (userScores.G >= userScores.F) ? "G" : "F";
+        code += (userScores.O >= userScores.R) ? "O" : "R";
+        code += (userScores.T >= userScores.Q) ? "T" : "Q";
+        code += (userScores.E >= userScores.D) ? "E" : "D";
+        code += (userScores.N >= userScores.W) ? "N" : "W";
+
+        const res = results[code] || results["GOTEN"]; 
+        
+        document.getElementById('res-stars').innerText = res.s;
+        document.getElementById('res-name').innerText = res.n;
+        document.getElementById('res-latin').innerText = res.l;
+        document.getElementById('res-desc').innerText = res.d;
+        document.getElementById('res-img').src = res.img;
+        document.getElementById('res-code').innerText = code;
+        document.getElementById('res-strength').innerText = res.strength;
+        document.getElementById('res-weakness').innerText = res.weakness;
+        document.getElementById('res-pair').innerText = res.pair;
+        document.getElementById('res-pair-desc').innerText = res.pair_desc;
+
+        const tagsBox = document.getElementById('res-tags');
+        tagsBox.innerHTML = '';
+        res.tags.forEach(t => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.innerText = "#" + t;
+            tagsBox.appendChild(span);
+        });
+    }
+</script>
+</body>
+</html>
